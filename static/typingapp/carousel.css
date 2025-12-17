@@ -1,0 +1,23 @@
+.carousel-container {
+  position: relative;
+  max-width: 800px;
+  margin: 40px auto;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.carousel-slide {
+  display: none;
+  text-align: center;
+}
+
+.carousel-slide.active {
+  display: block;
+}
+
+.carousel-slide h2 {
+  font-size: 28px;
+  color: #2c3e50;
+}

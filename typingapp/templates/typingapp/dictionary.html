@@ -1,0 +1,40 @@
+{% extends 'typingapp/base.html' %}
+{% block title %}Dictionary{% endblock %}
+
+{% block content %}
+<h1>📘 Dictionary</h1>
+
+<form method="get">
+  <input type="text" name="q" placeholder="Search word..." value="{{ query }}">
+  <button type="submit">Search</button>
+</form>
+
+<hr>
+
+{% for word in page_obj %}
+<div class="card">
+  <h3>{{ word.word }}</h3>
+  <p><b>Meaning:</b> {{ word.meaning }}</p>
+  <p><b>Synonyms:</b> {{ word.synonyms }}</p>
+  <p><b>Antonyms:</b> {{ word.antonyms }}</p>
+  <ul>
+    <li>{{ word.sentence1 }}</li>
+    <li>{{ word.sentence2 }}</li>
+    <li>{{ word.sentence3 }}</li>
+  </ul>
+</div>
+{% empty %}
+<p>No words found.</p>
+{% endfor %}
+
+<div>
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">Prev</a>
+  {% endif %}
+  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">Next</a>
+  {% endif %}
+</div>
+
+{% endblock %}

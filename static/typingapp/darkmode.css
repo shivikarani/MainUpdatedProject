@@ -1,0 +1,22 @@
+body.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark a {
+  color: #90caf9;
+}
+
+body.dark .card,
+body.dark .carousel-container {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+}

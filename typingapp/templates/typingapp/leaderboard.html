@@ -1,0 +1,14 @@
+{% extends 'typingapp/base.html' %} 
+
+{% load tz %}
+{% block content %}
+<h1>🏆 Leaderboard</h1>
+
+{% for r in results %}
+<p>
+  {{ r.user.username }} — {{ r.wpm }} WPM  
+  <small>({{ r.created_at|localtime|date:"d M Y, h:i A" }})</small>
+</p>
+{% endfor %}
+
+{% endblock %}

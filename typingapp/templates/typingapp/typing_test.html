@@ -1,0 +1,64 @@
+
+{% extends 'typingapp/base.html' %}
+{% load static %}
+
+{% block title %}Typing Test{% endblock %}
+{% block content %}
+<div class="test-page">
+  <h1>Typing Speed Test</h1>
+  <p>Select difficulty and time duration to begin your test.</p>
+
+  <div class="controls">
+    <label>Level:
+      <select id="level">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </label>
+    <label>Duration:
+      <select id="duration">
+        <option value="60">1 Minute</option>
+        <option value="120">2 Minutes</option>
+        <option value="300">5 Minutes</option>
+        <option value="600">10 Minutes</option>
+        <option value="1200">20 Minutes</option>
+      </select>
+    </label>
+    <label>
+      Mode:
+  <select id="mode">
+    <option value="test">Test</option>
+    <option value="practice">Practice</option>
+  </select>
+</label>
+
+    <div id="countdown" style="font-size:30px; font-weight:bold; display:none;"></div>
+
+    <button id="start-btn" class="btn-primary" >Start Test</button>
+  </div>
+
+  <div id="source-text" class="source-box">
+    Click “Start Test” to see your text here.
+  </div>
+
+  <textarea id="typing-area" placeholder="Start typing here..." disabled></textarea>
+
+  <div class="status-bar">
+    <span id="timer">00:00</span>
+    <span id="wpm">WPM: 0</span>
+    <span id="accuracy">Accuracy: 0%</span>
+    <button id="submit-btn" class="btn-secondary" disabled>Submit</button>
+  </div>
+
+  <div id="result" class="result-box" style="display:none;"></div>
+</div>
+{% endblock %}
+
+
+
+<script>
+  const CSRF_TOKEN = '{{ csrf_token }}';
+</script>
+
+<script src="{% static 'typingapp/typing_test.js' %}" defer ></script>

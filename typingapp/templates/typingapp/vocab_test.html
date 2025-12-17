@@ -1,0 +1,16 @@
+{% extends 'typingapp/base.html' %}
+{% block content %}
+<h1>Vocabulary Test</h1>
+<form method="post" action="{% url 'vocab_submit' %}">
+{% csrf_token %}
+{% for q in questions %}
+<p><b>{{ q.word.word }}</b></p>
+<label><input type="radio" name="{{ q.id }}" value="A"> {{ q.option_a }}</label><br>
+<label><input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }}</label><br>
+<label><input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }}</label><br>
+<label><input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }}</label><br>
+<hr>
+{% endfor %}
+<button type="submit">Submit</button>
+</form>
+{% endblock %}

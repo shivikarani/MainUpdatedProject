@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+    {% load static %}
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Typing Speed{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'typingapp/style.css' %}">
+  <link rel="stylesheet" href="{% static 'typingapp/carousel.css' %}">
+  <link rel="stylesheet" href="{% static 'typingapp/typing.css' %}">
+  <link rel="stylesheet" href="{% static 'typingapp/darkmode.css' %}">
+
+
+
+  <script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const CSRF_TOKEN = getCookie('csrftoken');
+</script>
+
+</head>
+<body style="color:violet">
+  <nav class="navbar" >
+    <div class="container">
+      <a class="logo" href="{% url 'home' %}"><img src="{% static 'typingapp/logo.png' %}" alt="logo" height="50"></a>
+      <ul class="navlinks">
+        <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'dictionary' %}" class="{% if request.path == '/dictionary/' %}active{% endif %}">Dictionary</a></li>
+
+        <li>
+        {% if user.is_authenticated %}
+          <a href="{% url 'typing_test' %}" class="{% if request.path == '/typing-test/' %}active{% endif %}">Take Test</a>
+          <li><a href="{% url 'vocabulary_test' %}" class="{% if request.path == '/vocabulary-test/' %}active{% endif %}">Vocabulary Test</a></li>
+          <li><a href="{% url 'vocab_history' %}" class="{% if request.path == '/vocabulary-history/' %}active{% endif %}">Vocab History</a></li>
+          <li><a href="{% url 'leaderboard' %}" class="{% if request.path == '/leaderboard/' %}active{% endif %}">Leaderboard</a></li>
+
+        {% else %}
+          <a href="#" onclick="alert('Please login first to start the test!'); return false;" >Take Test</a>
+        {% endif %}
+        </li>
+
+        {% comment %} <li><a href="{% url 'typing_test' %}">Take Test</a></li> {% endcomment %}
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'history' %}" class="{% if request.path == '/history/' %}active{% endif %}">My Results</a></li>
+          <li><a href="{% url 'logout' %}" >Logout</a></li>
+          <button id="dark-toggle">🌙</button>
+
+        {% else %}
+          <li><a href="{% url 'signup' %}" class="{% if request.path == '/signup/' %}active{% endif %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}" class="{% if request.path == '/login/' %}active{% endif %}">Log In</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+  <!-- base.html ke end mein, </body> tag se pehle add karein -->
+<footer >
+    <div class="container">
+        <p>&copy; {{ current_year }} Typing Speed Test Website. All rights reserved.</p>
+        <p>
+            <a href="{% url 'home' %}" >Home</a> |
+            <a href="{% url 'about' %}" >About</a> |
+            <a href="{% url 'contact' %}" >Contact</a>
+        </p>
+    </div>
+</footer>
+
+  <script src="{% static 'typingapp/typing_test.js' %}"></script>
+  <script src="{% static 'typingapp/carousel.js' %}"></script>
+  <script src="{% static 'typingapp/darkmode.js' %}"></script>
+
+
+</body>
+</html>

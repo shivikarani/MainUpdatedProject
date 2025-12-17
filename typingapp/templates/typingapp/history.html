@@ -1,0 +1,37 @@
+{% extends 'typingapp/base.html' %}
+{% load tz %}
+
+{% block content %}
+<div class="results-container">
+  <h1 class="results-title">Your Past Typing Tests</h1>
+
+  {% if results %}
+  <table class="results-table" border=5>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Level</th>
+        <th>Duration</th>
+        <th>WPM</th>
+        <th>Accuracy</th>
+        <th>Errors</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in results %}
+      <tr>
+        <td>{{ r.created_at|localtime|date:"d M Y, h:i A" }}</td>
+        <td>{{ r.level|title }}</td>
+        <td>{{ r.duration_seconds }}s</td>
+        <td>{{ r.wpm|floatformat:1 }}</td>
+        <td>{{ r.accuracy|floatformat:1 }}%</td>
+        <td>{{ r.errors }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>No tests taken yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

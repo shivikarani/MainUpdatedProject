@@ -1,0 +1,8 @@
+#source-text span.correct {
+  color: green;
+}
+
+#source-text span.wrong {
+  color: red;
+  text-decoration: underline;
+}

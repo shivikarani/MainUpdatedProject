@@ -1,0 +1,387 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: #f9fafb;
+  color: #333;
+}
+
+.navbar {
+  background-color:rgb(131, 6, 131);
+  /* #0078ff */
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navlinks {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navlinks a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 10%;
+  background: #eef5ff;
+}
+
+.hero-text {
+  max-width: 500px;
+}
+
+.hero-text h1 {
+  font-size: 2.5em;
+  margin-bottom: 15px;
+}
+
+.btn-primary, .btn-secondary {
+  background: rgb(250, 194, 250);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background: #333;
+}
+
+.form-container {
+  width: 400px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.test-page {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.source-box {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 6px;
+  min-height: 100px;
+  margin-top: 20px;
+}
+
+#typing-area {
+  width: 100%;
+  height: 150px;
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.status-bar {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: #eaf6ff;
+  border-radius: 8px;
+}
+/* added for table styling */
+/* Table container for scroll on small screens */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Base table styling */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Header */
+.data-table thead {
+  background-color: #0078d7;
+  color: white;
+  text-align: left;
+}
+
+.data-table th {
+  padding: 12px 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Body */
+.data-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Zebra stripes */
+.data-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+.data-table tbody tr:hover {
+  background-color: #e6f0ff;
+}
+
+/* Responsive text */
+@media (max-width: 600px) {
+  .data-table th, .data-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+
+button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+
+/* ===== My Results Table ===== */
+
+.results-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.results-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #d63384;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.results-table thead {
+  background: linear-gradient(135deg, #ff77e9, #ffb3f0);
+}
+
+.results-table th {
+  padding: 14px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.results-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.results-table tr:hover {
+  background-color: #fff0fa;
+}
+
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* static/css/style.css */
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Ensure full height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Body ko flex container banao */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Content ko flex: 1 do, taaki footer bottom mein rahe */
+main {
+    flex: 1;
+}
+
+/* Footer styling */
+footer {
+    background-color: #b8488f;
+    color: #333333;
+    padding: 20px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+footer a {
+    color: #333333;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer nav {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+
+
+
+/* leaderboard css */
+/* Leaderboard container */
+h1 {
+    font-size: 2.5rem;
+    color: #ff6f91; /* vibrant pink */
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Each leaderboard entry */
+p {
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #f9f9f9, #ffe6f0);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin: 10px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Hover effect for entries */
+p:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+/* Username styling */
+p strong {
+    color: #ff4da6;
+    font-weight: 700;
+}
+
+/* WPM styling */
+p span {
+    font-weight: bold;
+    color: #ff3366;
+}
+
+/* Date styling */
+small {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* Optional: page background */
+body {
+    background: linear-gradient(to right, #ffe6f0, #ffccf2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* navbar css */
+nav{
+  background-color: #b8488f;
+}
+.navbar {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect */
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Active link effect */
+.navbar a.active {
+  background-color: white;
+  color: #d16cf0; /* Jo bhi aapka navbar color hai */
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+}

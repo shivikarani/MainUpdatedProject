@@ -1,0 +1,15 @@
+{% extends 'typingapp/base.html' %}
+{% load tz %}
+{% block content %}
+<h2>Result</h2>
+<p>Correct: {{ result.correct }}</p>
+<p>Wrong: {{ result.wrong }}</p>
+{{ result.created_at|localtime|date:"d M Y, h:i A" }}
+{% for a in answers %}
+<p>
+<b>{{ a.question.word.word }}</b> |
+Your: {{ a.selected_option }} |
+Correct: {{ a.question.correct_option }}
+</p>
+{% endfor %}
+{% endblock %}

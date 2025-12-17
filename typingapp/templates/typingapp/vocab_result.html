@@ -1,0 +1,14 @@
+{% extends 'typingapp/base.html' %}
+{% block content %}
+<h2>Result</h2>
+<p>Correct: {{ result.correct }}</p>
+<p>Wrong: {{ result.wrong }}</p>
+
+{% for a in answers %}
+<p>
+<b>{{ a.question.word.word }}</b> |
+Your: {{ a.selected_option }} |
+Correct: {{ a.question.correct_option }}
+</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'typingapp/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="form-container">
+  <h2>Create Your Account</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button style="background-color:violet" type="submit" class="btn-primary">Sign Up</button>
+  </form>
+  <p>Already have an account? <a href="{% url 'login' %}">Log in here</a>.</p>
+</div>
+{% endblock %}
