@@ -14,6 +14,7 @@ from .models import VocabularyQuestion, VocabularyTestResult, VocabularyAnswer
 
 from .models import DictionaryWord
 import random
+from django.db.models import Max
 
 def home(request):
     words = list(DictionaryWord.objects.all())
@@ -117,24 +118,100 @@ def dictionary_view(request):
     })
 
 
-
 @login_required
 def vocabulary_test(request):
-    questions = list(VocabularyQuestion.objects.order_by('?')[:20])
-    request.session['vocab_qids'] = [q.id for q in questions]
-    return render(request, 'typingapp/vocab_test.html', {'questions': questions})
+    all_ids = list(VocabularyQuestion.objects.values_list('id', flat=True))
+
+    if not all_ids:
+        return render(request, 'typingapp/vocab_test.html', {
+            'questions': [],
+            'error': 'No vocabulary questions available. Please add questions in admin.'
+        })
+
+    used_ids = request.session.get('used_vocab_questions', [])
+
+    # remove already used
+    available_ids = list(set(all_ids) - set(used_ids))
+
+    # agar sab use ho gaye → reset
+    if not available_ids:
+        available_ids = all_ids
+        used_ids = []
+
+    # ⭐ SAFE COUNT
+    count = min(20, len(available_ids))
+
+    selected_ids = random.sample(available_ids, count)
+
+    request.session['used_vocab_questions'] = used_ids + selected_ids
+    request.session['vocab_qids'] = selected_ids
+
+    questions = VocabularyQuestion.objects.filter(id__in=selected_ids)
+
+    return render(request, 'typingapp/vocab_test.html', {
+        'questions': questions
+    })
 
 
+# @login_required
+# def vocabulary_test(request):
+#     questions = list(VocabularyQuestion.objects.order_by('?')[:20])
+#     request.session['vocab_qids'] = [q.id for q in questions]
+#     return render(request, 'typingapp/vocab_test.html', {'questions': questions})
+
+
+# @login_required
+# def vocab_submit(request):
+#     if request.method != 'POST':
+#         return redirect('vocabulary_test')
+
+#     qids = request.session.get('vocab_qids', [])
+#     questions = VocabularyQuestion.objects.filter(id__in=qids)
+
+#     correct = 0
+#     wrong = 0
+#     result = VocabularyTestResult.objects.create(
+#         user=request.user,
+#         score=0,
+#         total_questions=len(questions),
+#         correct=0,
+#         wrong=0
+#     )
+
+#     for q in questions:
+#         selected = request.POST.get(str(q.id))
+#         if selected == q.correct_option:
+#             correct += 1
+#         else:
+#             wrong += 1
+
+#         VocabularyAnswer.objects.create(
+#             result=result,
+#             question=q,
+#             selected_option=selected
+#         )
+
+#     result.correct = correct
+#     result.wrong = wrong
+#     result.score = correct
+#     result.save()
+
+#     return redirect('vocab_result', result.id)
 @login_required
 def vocab_submit(request):
     if request.method != 'POST':
         return redirect('vocabulary_test')
 
-    qids = request.session.get('vocab_qids', [])
+    qids = request.session.get('vocab_qids')
+
+    if not qids:
+        return redirect('vocabulary_test')
+
     questions = VocabularyQuestion.objects.filter(id__in=qids)
 
     correct = 0
     wrong = 0
+
     result = VocabularyTestResult.objects.create(
         user=request.user,
         score=0,
@@ -145,6 +222,7 @@ def vocab_submit(request):
 
     for q in questions:
         selected = request.POST.get(str(q.id))
+
         if selected == q.correct_option:
             correct += 1
         else:
@@ -161,13 +239,14 @@ def vocab_submit(request):
     result.score = correct
     result.save()
 
-    return redirect('vocab_result', result.id)
+    return redirect('vocab_result', result_id=result.id)
+
 
 
 @login_required
 def vocab_result(request, result_id):
     result = VocabularyTestResult.objects.get(id=result_id, user=request.user)
-    answers = VocabularyAnswer.objects.filter(result=result)
+    answers = VocabularyAnswer.objects.select_related('question').filter(result=result)
     return render(request, 'typingapp/vocab_result.html', {
         'result': result,
         'answers': answers
@@ -187,6 +266,8 @@ def leaderboard(request):
     return render(request, 'typingapp/leaderboard.html', {
         'results': top_results
     })
+
+
 
 
 def about(request):

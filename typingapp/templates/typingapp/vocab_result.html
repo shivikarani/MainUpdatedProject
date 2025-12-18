@@ -1,4 +1,61 @@
 {% extends 'typingapp/base.html' %}
+
+{% block content %}
+<div class="results-container">
+  <h1 class="results-title">📊 Vocabulary Test Result</h1>
+
+  <div style="text-align:center;margin-bottom:25px;">
+    <strong>Total:</strong> {{ result.total_questions }} |
+    <span style="color:green;"><strong>Correct:</strong> {{ result.correct }}</span> |
+    <span style="color:red;"><strong>Wrong:</strong> {{ result.wrong }}</span>
+  </div>
+
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Word</th>
+        <th>Your Answer</th>
+        <th>Correct Answer</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in answers %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td><strong>{{ a.question.word.word }}</strong></td>
+
+        <td>
+          {{ a.selected_option }}
+        </td>
+
+        <td>
+          {{ a.question.correct_option }}
+        </td>
+
+        <td>
+          {% if a.selected_option == a.question.correct_option %}
+            <span style="color:green;font-weight:bold;">✔ Correct</span>
+          {% else %}
+            <span style="color:red;font-weight:bold;">✖ Wrong</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="text-align:center;margin-top:30px;">
+    <a href="{% url 'vocabulary_test' %}" class="btn-primary">🔁 Take Another Test</a>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+{% comment %} {% extends 'typingapp/base.html' %}
 {% block content %}
 <h2>Result</h2>
 <p>Correct: {{ result.correct }}</p>
@@ -11,4 +68,4 @@ Your: {{ a.selected_option }} |
 Correct: {{ a.question.correct_option }}
 </p>
 {% endfor %}
-{% endblock %}
+{% endblock %} {% endcomment %}

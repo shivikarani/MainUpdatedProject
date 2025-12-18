@@ -1,8 +1,6 @@
 // static/typingapp/typing_test.js
 document.addEventListener('DOMContentLoaded', () => {
-  
 
-  // Elements
   const startBtn = document.getElementById('start-btn');
   const submitBtn = document.getElementById('submit-btn');
   const typingArea = document.getElementById('typing-area');
@@ -14,68 +12,83 @@ document.addEventListener('DOMContentLoaded', () => {
   const countdownDiv = document.getElementById('countdown');
   const modeSelect = document.getElementById('mode');
 
-  // Sample texts
+  /* ================= TEXT BANK ================= */
   const texts = {
     easy: [
       "The quick brown fox jumps over the lazy dog.",
-      "Typing is a skill that gets better with practice."
+      "Typing every day improves both speed and accuracy.",
+      "Practice makes a person confident and focused."
     ],
     medium: [
-      "Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.",
-      "Consistency in practice improves speed and reduces errors over time."
+      "Django is a powerful web framework that helps developers build applications quickly.",
+      "Regular typing practice enhances muscle memory and reduces mistakes.",
+      "Learning consistently leads to better performance over time."
     ],
     hard: [
-      "The axiomatic lattice of cognition collapses whenever certainty masquerades as completion, for ontological inertia ensures that meaning decays faster than matter.",
-      "Optimization often demands understanding of algorithmic complexity as well as system level behaviour and caching strategies."
+      "For years, health enthusiasts have lived by the age-old motto that an apple a day keeps the doctor away.",
+      "Optimization requires a deep understanding of algorithms, memory usage, and system behavior.",
+      "Cognitive flexibility improves when individuals challenge their comfort zones regularly."
     ]
   };
 
   let duration = 60;
   let level = 'easy';
-  let totalTyped = 0;
-  let correctChars = 0;
-  let errors = 0;
   let timer = null;
   let timeLeft = 0;
   let startTime = null;
-  let sourceText = '';
 
-  // Helper functions
-  function formatTime(s) {
-    const m = Math.floor(s / 60).toString().padStart(2, '0');
-    const sec = (s % 60).toString().padStart(2, '0');
-    return `${m}:${sec}`;
+  let sourceText = '';
+  let totalTyped = 0;
+  let correctChars = 0;
+  let errors = 0;
+
+  /* ================= HELPERS ================= */
+  function formatTime(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, '0');
+    const s = String(sec % 60).padStart(2, '0');
+    return `${m}:${s}`;
   }
 
-  function pickText(level) {
+  function getRandomParagraph() {
     const arr = texts[level];
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
-  function startActualTest() {
-    level = document.getElementById('level').value;
-    duration = parseInt(document.getElementById('duration').value);
-    sourceText = pickText(level);
-    sourceBox.innerHTML = '';
+  function appendNewParagraph() {
+    const para = getRandomParagraph();
+    sourceText += para + "\n\n";
 
-    // wrap each character in span
-    sourceText.split('').forEach(char => {
+    para.split('').forEach(char => {
       const span = document.createElement('span');
       span.textContent = char;
       sourceBox.appendChild(span);
     });
 
+    // line break
+    sourceBox.appendChild(document.createElement('br'));
+    sourceBox.appendChild(document.createElement('br'));
+  }
+
+  /* ================= START TEST ================= */
+  function startActualTest() {
+    level = document.getElementById('level').value;
+    duration = parseInt(document.getElementById('duration').value);
+
+    sourceBox.innerHTML = '';
+    sourceText = '';
     typingArea.value = '';
     typingArea.disabled = false;
     typingArea.focus();
-    submitBtn.disabled = false;
 
     totalTyped = 0;
     correctChars = 0;
     errors = 0;
+
+    appendNewParagraph();
+    appendNewParagraph(); // start with multiple lines
+
     timeLeft = duration;
     startTime = Date.now();
-
     timerSpan.textContent = formatTime(timeLeft);
 
     timer = setInterval(() => {
@@ -88,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  // Start button click with 3-second countdown
+  /* ================= COUNTDOWN ================= */
   startBtn.addEventListener('click', () => {
     let count = 3;
     countdownDiv.style.display = 'block';
@@ -106,15 +119,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   });
 
-  // Typing input event
+  /* ================= TYPING ================= */
   typingArea.addEventListener('input', () => {
     const typed = typingArea.value;
     const spans = sourceBox.querySelectorAll('span');
+
     correctChars = 0;
 
-    spans.forEach((span, index) => {
-      const typedChar = typed[index];
-      if (typedChar == null) {
+    spans.forEach((span, i) => {
+      const typedChar = typed[i];
+      if (!typedChar) {
         span.classList.remove('correct', 'wrong');
       } else if (typedChar === span.textContent) {
         span.classList.add('correct');
@@ -129,65 +143,60 @@ document.addEventListener('DOMContentLoaded', () => {
     totalTyped = typed.length;
     errors = totalTyped - correctChars;
 
-    const elapsed = (Date.now() - startTime) / 1000 / 60;
-    const wpm = (correctChars / 5) / Math.max(elapsed, 0.01);
+    const elapsedMin = (Date.now() - startTime) / 60000;
+    const wpm = (correctChars / 5) / Math.max(elapsedMin, 0.01);
     const accuracy = totalTyped ? (correctChars / totalTyped) * 100 : 0;
 
     wpmSpan.textContent = `WPM: ${Math.round(wpm)}`;
     accSpan.textContent = `Accuracy: ${Math.round(accuracy)}%`;
+
+    /* 🔥 AUTO ADD MORE TEXT */
+    if (typed.length > sourceText.length * 0.7) {
+      appendNewParagraph();
+    }
   });
 
-  // Finish test
+  /* ================= FINISH ================= */
   function finishTest() {
-    if (typingArea.disabled) return;
     typingArea.disabled = true;
-    submitBtn.disabled = false;
 
-    const typed = typingArea.value;
     const minutes = duration / 60;
     const wpm = (correctChars / 5) / minutes;
-    const accuracy = totalTyped > 0 ? (correctChars / totalTyped) * 100 : 0;
+    const accuracy = totalTyped ? (correctChars / totalTyped) * 100 : 0;
 
     resultDiv.style.display = 'block';
-    resultDiv.innerHTML = `<h3>Result</h3>
+    resultDiv.innerHTML = `
+      <h3>Result</h3>
       <p>WPM: ${wpm.toFixed(1)}</p>
       <p>Accuracy: ${accuracy.toFixed(1)}%</p>
-      <p>Errors: ${errors}</p>`;
+      <p>Errors: ${errors}</p>
+    `;
 
-    // Send result to server only in Test mode
     if (modeSelect.value === 'test') {
-      sendResult({
-        duration_seconds: duration,
-        level: level,
-        source_text: sourceText,
-        typed_text: typed,
-        correct_chars: correctChars,
-        total_typed_chars: totalTyped,
-        errors: errors,
-        wpm: parseFloat(wpm.toFixed(2)),
-        accuracy: parseFloat(accuracy.toFixed(2))
+      fetch('/save-result/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': CSRF_TOKEN
+        },
+        body: JSON.stringify({
+          duration_seconds: duration,
+          level,
+          source_text: sourceText,
+          typed_text: typingArea.value,
+          correct_chars: correctChars,
+          total_typed_chars: totalTyped,
+          errors,
+          wpm,
+          accuracy
+        })
       });
     }
   }
 
-  // Submit button
   submitBtn.addEventListener('click', () => {
     if (timer) clearInterval(timer);
     finishTest();
   });
 
-  // Send result to Django backend
-  function sendResult(payload) {
-    fetch('/save-result/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': CSRF_TOKEN
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(r => r.json())
-      .then(data => console.log('saved', data))
-      .catch(e => console.error(e));
-  }
 });

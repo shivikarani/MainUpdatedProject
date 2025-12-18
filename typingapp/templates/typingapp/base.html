@@ -46,7 +46,8 @@
           <li><a href="{% url 'leaderboard' %}" class="{% if request.path == '/leaderboard/' %}active{% endif %}">Leaderboard</a></li>
 
         {% else %}
-          <a href="#" onclick="alert('Please login first to start the test!'); return false;" >Take Test</a>
+          <li><a href="{% url 'typing_test' %}" class="{% if request.path == '/typing-test/' %}active{% endif %}">Take Test</a></li>
+          <li><a href="{% url 'vocabulary_test' %}" class="{% if request.path == '/vocabulary-test/' %}active{% endif %}">Vocabulary Test</a></li>
         {% endif %}
         </li>
 

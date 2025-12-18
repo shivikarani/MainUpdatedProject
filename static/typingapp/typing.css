@@ -1,8 +1,23 @@
-#source-text span.correct {
+.source-box {
+  height: 220px;
+  overflow-y: auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.text-line {
+  margin-bottom: 10px;
+}
+
+.correct {
   color: green;
 }
 
-#source-text span.wrong {
+.wrong {
   color: red;
   text-decoration: underline;
 }
+
