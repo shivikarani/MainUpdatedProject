@@ -29,3 +29,7 @@ admin.site.register(VocabularyTestResult)
 admin.site.register(VocabularyAnswer)
 
 
+
+list_display = ('user', 'level', 'wpm', 'accuracy')
+readonly_fields = ('char_errors',)
+

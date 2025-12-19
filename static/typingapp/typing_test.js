@@ -1,4 +1,3 @@
-// static/typingapp/typing_test.js
 document.addEventListener('DOMContentLoaded', () => {
 
   const startBtn = document.getElementById('start-btn');
@@ -12,105 +11,125 @@ document.addEventListener('DOMContentLoaded', () => {
   const countdownDiv = document.getElementById('countdown');
   const modeSelect = document.getElementById('mode');
 
-  /* ================= TEXT BANK ================= */
   const texts = {
     easy: [
       "The quick brown fox jumps over the lazy dog.",
-      "Typing every day improves both speed and accuracy.",
-      "Practice makes a person confident and focused."
+      "Typing is a skill that gets better with practice."
     ],
     medium: [
-      "Django is a powerful web framework that helps developers build applications quickly.",
-      "Regular typing practice enhances muscle memory and reduces mistakes.",
-      "Learning consistently leads to better performance over time."
+      "Django is a high-level Python web framework that encourages rapid development and clean design.",
+      "Consistency in practice improves speed and reduces errors."
     ],
     hard: [
-      "For years, health enthusiasts have lived by the age-old motto that an apple a day keeps the doctor away.",
-      "Optimization requires a deep understanding of algorithms, memory usage, and system behavior.",
-      "Cognitive flexibility improves when individuals challenge their comfort zones regularly."
+      "Optimization often demands understanding of algorithmic complexity and system level behavior.",
+      "The axiomatic lattice of cognition collapses whenever certainty masquerades as completion."
     ]
   };
 
   let duration = 60;
   let level = 'easy';
-  let timer = null;
-  let timeLeft = 0;
-  let startTime = null;
-
-  let sourceText = '';
   let totalTyped = 0;
   let correctChars = 0;
   let errors = 0;
+  let timer = null;
+  let timeLeft = 0;
+  let startTime = null;
+  let sourceText = '';
+  let testFinished = false;   // 🔥 IMPORTANT
 
-  /* ================= HELPERS ================= */
   function formatTime(sec) {
-    const m = String(Math.floor(sec / 60)).padStart(2, '0');
-    const s = String(sec % 60).padStart(2, '0');
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
   }
 
-  function getRandomParagraph() {
-    const arr = texts[level];
-    return arr[Math.floor(Math.random() * arr.length)];
+  function pickText() {
+  const arr = texts[level];
+  let finalText = '';
+
+  for (let i = 0; i < 6; i++) {
+    finalText += arr[Math.floor(Math.random() * arr.length)] + '\n\n';
   }
 
-  function appendNewParagraph() {
-    const para = getRandomParagraph();
-    sourceText += para + "\n\n";
+  return finalText.trim();
+}
 
-    para.split('').forEach(char => {
-      const span = document.createElement('span');
-      span.textContent = char;
-      sourceBox.appendChild(span);
-    });
+   // 🔥 RESET OLD STATS
+  
 
-    // line break
-    sourceBox.appendChild(document.createElement('br'));
-    sourceBox.appendChild(document.createElement('br'));
-  }
-
-  /* ================= START TEST ================= */
   function startActualTest() {
+    if (timer) clearInterval(timer);
+    wpmSpan.textContent = 'WPM: 0';
+    accSpan.textContent = 'Accuracy: 0%';
+    timerSpan.textContent = formatTime(duration);
+
+    resultDiv.style.display = 'none';
+    resultDiv.innerHTML = '';
+
+    typingArea.scrollTop = 0;
+    sourceBox.scrollTop = 0;
+    testFinished = false;
+
+    // ✅ PROBLEM 3 FIX: purana result hatao
+    resultDiv.style.display = 'none';
+    resultDiv.innerHTML = '';
+
     level = document.getElementById('level').value;
     duration = parseInt(document.getElementById('duration').value);
 
+    sourceText = pickText();
     sourceBox.innerHTML = '';
-    sourceText = '';
+
+    sourceText.split('').forEach(char => {
+       const span = document.createElement('span');
+
+          if (char === '\n') {
+            span.innerHTML = '<br>';
+          } else {
+            span.textContent = char;
+          }
+
+          sourceBox.appendChild(span);
+        });
+
+
+    // ✅ scroll fix
+    sourceBox.scrollTop = sourceBox.scrollHeight;
+
     typingArea.value = '';
     typingArea.disabled = false;
     typingArea.focus();
+    submitBtn.disabled = false;
 
     totalTyped = 0;
     correctChars = 0;
     errors = 0;
 
-    appendNewParagraph();
-    appendNewParagraph(); // start with multiple lines
-
     timeLeft = duration;
     startTime = Date.now();
     timerSpan.textContent = formatTime(timeLeft);
+
+    if (timer) clearInterval(timer);
 
     timer = setInterval(() => {
       timeLeft--;
       timerSpan.textContent = formatTime(timeLeft);
       if (timeLeft <= 0) {
-        clearInterval(timer);
         finishTest();
       }
     }, 1000);
   }
 
-  /* ================= COUNTDOWN ================= */
+  // ✅ Start button with countdown
   startBtn.addEventListener('click', () => {
     let count = 3;
     countdownDiv.style.display = 'block';
     countdownDiv.textContent = count;
 
-    const interval = setInterval(() => {
+    const cd = setInterval(() => {
       count--;
       if (count === 0) {
-        clearInterval(interval);
+        clearInterval(cd);
         countdownDiv.style.display = 'none';
         startActualTest();
       } else {
@@ -119,18 +138,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   });
 
-  /* ================= TYPING ================= */
+  // Typing logic
   typingArea.addEventListener('input', () => {
     const typed = typingArea.value;
     const spans = sourceBox.querySelectorAll('span');
-
     correctChars = 0;
 
     spans.forEach((span, i) => {
-      const typedChar = typed[i];
-      if (!typedChar) {
+      const ch = typed[i];
+      if (ch == null) {
         span.classList.remove('correct', 'wrong');
-      } else if (typedChar === span.textContent) {
+      } else if (ch === span.textContent) {
         span.classList.add('correct');
         span.classList.remove('wrong');
         correctChars++;
@@ -139,6 +157,16 @@ document.addEventListener('DOMContentLoaded', () => {
         span.classList.remove('correct');
       }
     });
+
+    const currentIndex = typingArea.value.length;
+    const currentSpan = sourceBox.querySelectorAll('span')[currentIndex];
+
+    if (currentSpan) {
+      currentSpan.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
 
     totalTyped = typed.length;
     errors = totalTyped - correctChars;
@@ -149,15 +177,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     wpmSpan.textContent = `WPM: ${Math.round(wpm)}`;
     accSpan.textContent = `Accuracy: ${Math.round(accuracy)}%`;
+    const index = typingArea.value.length;
 
-    /* 🔥 AUTO ADD MORE TEXT */
-    if (typed.length > sourceText.length * 0.7) {
-      appendNewParagraph();
+    if (spans[index]) {
+      spans[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
     }
+
   });
 
-  /* ================= FINISH ================= */
+  // ✅ PROBLEM 1 FIX: force submit anytime
+  submitBtn.addEventListener('click', () => {
+    finishTest();
+  });
+
   function finishTest() {
+    if (testFinished) return;
+    testFinished = true;
+
+    clearInterval(timer);
     typingArea.disabled = true;
 
     const minutes = duration / 60;
@@ -181,22 +221,17 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         body: JSON.stringify({
           duration_seconds: duration,
-          level,
+          level: level,
           source_text: sourceText,
           typed_text: typingArea.value,
           correct_chars: correctChars,
           total_typed_chars: totalTyped,
-          errors,
-          wpm,
-          accuracy
+          errors: errors,
+          wpm: wpm,
+          accuracy: accuracy
         })
       });
     }
   }
-
-  submitBtn.addEventListener('click', () => {
-    if (timer) clearInterval(timer);
-    finishTest();
-  });
 
 });

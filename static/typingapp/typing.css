@@ -21,3 +21,14 @@
   text-decoration: underline;
 }
 
+
+.source-box {
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 12px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+

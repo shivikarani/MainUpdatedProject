@@ -21,7 +21,8 @@ class TestResult(models.Model):
     total_typed_chars = models.IntegerField()
     errors = models.IntegerField()
     wpm = models.FloatField()           # words per minute
-    accuracy = models.FloatField()      # percentage
+    accuracy = models.FloatField()  
+    char_errors = models.JSONField(default=dict)    # percentage
 
     # def __str__(self):
     #     who = self.user.username if self.user else f"anon:{self.session_id}"

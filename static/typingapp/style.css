@@ -479,3 +479,25 @@ nav{
   font-size: 13px;
   margin-bottom: 15px;
 }
+
+.source-box {
+  height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 18px;
+  line-height: 1.8;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+
+#typing-area {
+  height: 160px;
+  font-size: 18px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+

@@ -80,6 +80,7 @@ def save_result(request):
         return HttpResponseBadRequest('Missing fields')
     user = request.user if request.user.is_authenticated else None
     session_id = session_id = request.session.session_key or request.session.cycle_key()
+    
     # if not user:
     #     session_id = request.session.session_key or request.session.cycle_key()
     tr = TestResult.objects.create(
@@ -94,6 +95,10 @@ def save_result(request):
         errors=int(data['errors']),
         wpm=float(data['wpm']),
         accuracy=float(data['accuracy']),
+        char_errors = data.get('char_errors', {})
+        
+
+
     )
     return JsonResponse({'status':'ok','id': tr.id})
 
