@@ -23,6 +23,7 @@
     <tbody>
       {% for a in answers %}
       <tr>
+        
         <td>{{ forloop.counter }}</td>
         <td><strong>{{ a.question.word.word }}</strong></td>
 
@@ -32,7 +33,7 @@
 
         <td>
           {{ a.question.correct_option }}
-        </td>
+        </td> 
 
         <td>
           {% if a.selected_option == a.question.correct_option %}

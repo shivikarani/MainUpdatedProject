@@ -208,7 +208,6 @@ def vocab_submit(request):
         return redirect('vocabulary_test')
 
     qids = request.session.get('vocab_qids')
-
     if not qids:
         return redirect('vocabulary_test')
 
@@ -226,9 +225,14 @@ def vocab_submit(request):
     )
 
     for q in questions:
-        selected = request.POST.get(str(q.id))
+        selected = request.POST.get(f"question_{q.id}")
 
-        if selected == q.correct_option:
+
+        # ✅ agar option select nahi kiya
+        if not selected:
+            wrong += 1
+            selected = ''   # empty string save karo (NOT NULL)
+        elif selected == q.correct_option:
             correct += 1
         else:
             wrong += 1
@@ -245,6 +249,7 @@ def vocab_submit(request):
     result.save()
 
     return redirect('vocab_result', result_id=result.id)
+
 
 
 

@@ -24,7 +24,17 @@ from .models import (
     VocabularyAnswer
 )
 
-admin.site.register(VocabularyQuestion)
+@admin.register(VocabularyQuestion)
+class VocabularyQuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        'question_text',
+        'question_type',
+        'word',
+        'correct_option'
+    )
+    list_filter = ('question_type',)
+    search_fields = ('question_text', 'word__word')
+
 admin.site.register(VocabularyTestResult)
 admin.site.register(VocabularyAnswer)
 

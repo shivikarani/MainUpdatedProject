@@ -4,13 +4,33 @@
 <form method="post" action="{% url 'vocab_submit' %}">
 {% csrf_token %}
 {% for q in questions %}
-<p><b>{{ q.word.word }}</b></p>
-<label><input type="radio" name="{{ q.id }}" value="A"> {{ q.option_a }}</label><br>
-<label><input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }}</label><br>
-<label><input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }}</label><br>
-<label><input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }}</label><br>
-<hr>
+  <div class="question-box">
+    <p><b>{{ forloop.counter }}. {{ q.question_text }}</b></p>
+
+    <label>
+      <input type="radio" name="question_{{ q.id }}" value="A" required>
+      {{ q.option_a }}
+    </label><br>
+
+    <label>
+      <input type="radio" name="question_{{ q.id }}" value="B">
+      {{ q.option_b }}
+    </label><br>
+
+    <label>
+      <input type="radio" name="question_{{ q.id }}" value="C">
+      {{ q.option_c }}
+    </label><br>
+
+    <label>
+      <input type="radio" name="question_{{ q.id }}" value="D">
+      {{ q.option_d }}
+    </label><br>
+
+    <hr>
+  </div>
 {% endfor %}
+
 <button type="submit">Submit</button>
 </form>
 {% endblock %}

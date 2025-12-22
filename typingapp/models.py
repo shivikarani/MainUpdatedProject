@@ -44,18 +44,35 @@ class DictionaryWord(models.Model):
 
 
 class VocabularyQuestion(models.Model):
+    QUESTION_TYPE_CHOICES = [
+        ('meaning', 'Meaning'),
+        ('synonym', 'Synonym'),
+        ('antonym', 'Antonym'),
+        ('usage', 'Correct Usage'),
+    ]
+
     word = models.ForeignKey(DictionaryWord, on_delete=models.CASCADE)
+    question_type = models.CharField(
+        max_length=20,
+        choices=QUESTION_TYPE_CHOICES,
+        default='meaning'
+    )
+    question_text = models.CharField(max_length=255, default='' )
+
+
     option_a = models.CharField(max_length=255)
     option_b = models.CharField(max_length=255)
     option_c = models.CharField(max_length=255)
     option_d = models.CharField(max_length=255)
+
     correct_option = models.CharField(
         max_length=1,
         choices=[('A','A'),('B','B'),('C','C'),('D','D')]
     )
 
     def __str__(self):
-        return self.word.word
+        return self.question_text
+
 
 
 class VocabularyTestResult(models.Model):
