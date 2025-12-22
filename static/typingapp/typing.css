@@ -34,3 +34,9 @@
   background: #fff;
 }
 
+#typing-area {
+  white-space: pre-wrap; /* preserves spaces & wraps text */
+  overflow-wrap: break-word; /* breaks long words if needed */
+}
+
+

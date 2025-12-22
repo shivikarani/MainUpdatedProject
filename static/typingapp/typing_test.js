@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('start-btn');
   const submitBtn = document.getElementById('submit-btn');
   const typingArea = document.getElementById('typing-area');
+  typingArea.rows = 10;      // initial height in rows
+  typingArea.wrap = 'soft';   // allow text to wrap naturally
+
   const sourceBox = document.getElementById('source-text');
   const timerSpan = document.getElementById('timer');
   const wpmSpan = document.getElementById('wpm');
@@ -181,6 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Typing logic
   typingArea.addEventListener('input', () => {
+    typingArea.style.height = 'auto';
+    typingArea.style.height = typingArea.scrollHeight + 'px';
     const typed = typingArea.value;
     const spans = sourceBox.querySelectorAll('span');
     correctChars = 0;
@@ -204,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentSpan) {
       currentSpan.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'auto',
         block: 'center'
       });
     }
