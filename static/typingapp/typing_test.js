@@ -14,15 +14,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const texts = {
     easy: [
       "The quick brown fox jumps over the lazy dog.",
-      "Typing is a skill that gets better with practice."
+      "Typing is a skill that gets better with practice.",
+      "Typing skills improve with regular and focused practice.",
+      "Fast typing requires accuracy more than speed.",
+      "Daily practice helps build strong muscle memory.",
+      "Good posture makes typing more comfortable.",
+      "Touch typing saves time and effort.",
+      "Accuracy comes before speed in typing.",
+      "Consistent effort leads to better typing results.",
+      "Relaxed hands help reduce typing mistakes.",
+      "Typing fluency increases with repetition.",
+      "Using all fingers improves typing efficiency.",
+      "Short practice sessions are very effective.",
+      "Typing without looking boosts confidence.",
+      "Steady rhythm improves typing flow.",
+      "Proper hand placement increases speed.",
+      "Typing practice sharpens keyboard control.",
+      "Focused practice leads to fewer errors."
     ],
     medium: [
       "Django is a high-level Python web framework that encourages rapid development and clean design.",
-      "Consistency in practice improves speed and reduces errors."
+      "Consistency in practice improves speed and reduces errors.",
+      "Comfortable seating improves typing sessions.",
+      "Typing daily builds long term skills.",
+      "Clean keyboards improve typing comfort.",
+      "Slow typing helps build accuracy first.",
+      "Correct technique makes typing easier.",
+      "Typing skills are useful in many jobs.",
+      "Patience is key when learning typing.",
+      "Typing games make learning more fun.",
+      "Good lighting improves typing accuracy.",
+      "Typing efficiency grows with experience.",
+      "Regular drills strengthen finger memory.",
+      "Typing smoothly reduces fatigue.",
+      "Strong typing skills save time.",
+      "Practice builds typing confidence.",
+      "Typing becomes faster with time.",
+      "Errors decrease with careful practice.",
+      "Typing focus improves overall speed.",
+      "Keyboard familiarity boosts performance."
     ],
     hard: [
       "Optimization often demands understanding of algorithmic complexity and system level behavior.",
-      "The axiomatic lattice of cognition collapses whenever certainty masquerades as completion."
+      "The axiomatic lattice of cognition collapses whenever certainty masquerades as completion.",
+      "Typing is a skill that improves significantly when you practice regularly and pay attention to both speed and accuracy, which helps in everyday computer tasks.",
+      "The quick brown fox jumps over the lazy dog repeatedly, showing that even a simple sentence can be used to practice every letter on the keyboard efficiently.",
+      "Practice daily not only increases your typing speed but also strengthens your muscle memory and builds confidence in using all your fingers without looking at the keys.",
+      "Learning to type using touch typing techniques allows you to type quickly, smoothly, and accurately while keeping your eyes on the screen rather than the keyboard.",
+      "Typing games, structured exercises, and timed drills can make practice engaging and help maintain a balance between fun and the development of professional typing skills.",
+      "Every typing session, no matter how short, adds to your overall improvement, especially if you focus on eliminating errors and maintaining a steady rhythm for better consistency.",
+      "Consistent and focused typing exercises, combined with correct posture and hand positioning, can dramatically reduce mistakes and increase overall efficiency over time."
     ]
   };
 
@@ -47,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const arr = texts[level];
   let finalText = '';
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 100; i++) {
     finalText += arr[Math.floor(Math.random() * arr.length)] + '\n\n';
   }
 
@@ -94,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ✅ scroll fix
-    sourceBox.scrollTop = sourceBox.scrollHeight;
+    // sourceBox.scrollTop = sourceBox.scrollHeight;
 
     typingArea.value = '';
     typingArea.disabled = false;
