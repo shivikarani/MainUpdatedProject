@@ -614,3 +614,30 @@ nav{
 }
 
 
+.page-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.search-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.search-center input {
+  padding: 10px;
+  width: 280px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.search-center button {
+  padding: 10px 16px;
+  margin-left: 8px;
+  border-radius: 6px;
+  border: none;
+  background: #7570d7;
+  color: white;
+}

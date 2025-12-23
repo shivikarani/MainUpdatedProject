@@ -3,56 +3,67 @@
 
 {% block content %}
 
-<h1 style="text-align:center;">📘 Dictionary</h1>
+<h1 class="page-title">📘 Dictionary</h1>
 
-<!-- SEARCH BAR CENTER -->
-<div style="display:flex; justify-content:center; margin:30px 0;">
-  <form method="get" style="display:flex; gap:10px;">
-    <input type="text" name="q" placeholder="Search a word..."
-           value="{{ query }}" required
-           style="padding:10px; width:300px; border-radius:8px; border:1px solid #ccc;">
-    <button type="submit" style="padding:10px 20px;">Search</button>
+<!-- 🔍 Centered Search Bar -->
+<div class="search-center">
+  <form method="get">
+    <input type="text" name="q" placeholder="Search any word..." value="{{ query }}">
+    <button type="submit">Search</button>
   </form>
 </div>
 
-{% if error %}
-  <p style="text-align:center; color:red;">{{ error }}</p>
-{% endif %}
-
-<!-- SEARCH RESULT -->
-{% if api_word %}
-<div class="card">
-  <h3>{{ api_word.word }}</h3>
-
-  <p><b>Meaning:</b> {{ api_word.meaning }}</p>
-  {% comment %} <p><b>Synonyms:</b> {{ api_word.synonyms }}</p>
-  <p><b>Antonyms:</b> {{ api_word.antonyms }}</p> {% endcomment %}
-
-  <ul>
-    {% for ex in api_word.examples %}
-      <li>{{ ex }}</li>
-    {% empty %}
-      <li>No example available</li>
-    {% endfor %}
-  </ul>
-</div>
 <hr>
+
+<!-- 🔹 API / searched word (highlighted) -->
+{% if api_word %}
+<div class="card highlight-card">
+  <h3>{{ api_word.word|title }}</h3>
+
+  {% if api_word.meaning %}
+    <p><b>Meaning:</b> {{ api_word.meaning }}</p>
+  {% endif %}
+
+  {% if api_word.synonyms %}
+    <p><b>Synonyms:</b> {{ api_word.synonyms }}</p>
+  {% endif %}
+
+  {% if api_word.antonyms %}
+    <p><b>Antonyms:</b> {{ api_word.antonyms }}</p>
+  {% endif %}
+
+  {% if api_word.sentence1 %}
+    <p><b>Example:</b> {{ api_word.sentence1 }}</p>
+  {% endif %}
+</div>
 {% endif %}
 
+<!-- 🔹 Database Words -->
 {% for word in page_obj %}
 <div class="card">
-  <h3>{{ word.word }}</h3>
+  <h3>{{ word.word|title }}</h3>
+
   <p><b>Meaning:</b> {{ word.meaning }}</p>
-  <p><b>Synonyms:</b> {{ word.synonyms }}</p>
-  <p><b>Antonyms:</b> {{ word.antonyms }}</p> 
-  <ul>
-    {% if word.sentence1 %}<li>{{ word.sentence1 }}</li>{% endif %}
-    {% if word.sentence2 %}<li>{{ word.sentence2 }}</li>{% endif %}
-    {% if word.sentence3 %}<li>{{ word.sentence3 }}</li>{% endif %}
-  </ul>
+
+  {% if word.synonyms %}
+    <p><b>Synonyms:</b> {{ word.synonyms }}</p>
+  {% endif %}
+
+  {% if word.antonyms %}
+    <p><b>Antonyms:</b> {{ word.antonyms }}</p>
+  {% endif %}
+
+  {% if word.sentence1 or word.sentence2 or word.sentence3 %}
+    <b>Examples:</b>
+    <ul>
+      {% if word.sentence1 %}<li>{{ word.sentence1 }}</li>{% endif %}
+      {% if word.sentence2 %}<li>{{ word.sentence2 }}</li>{% endif %}
+      {% if word.sentence3 %}<li>{{ word.sentence3 }}</li>{% endif %}
+    </ul>
+  {% endif %}
 </div>
+{% empty %}
+<p>No words found.</p>
 {% endfor %}
-
-
 
 {% endblock %}
