@@ -501,3 +501,116 @@ nav{
   overflow-y: auto;
 }
 
+
+.dictionary-page {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.dict-title {
+    text-align: center;
+    color: #e91e63;
+    margin-bottom: 25px;
+}
+
+/* Search bar center */
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-form input {
+    width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #9c27b0;
+    color: white;
+    cursor: pointer;
+}
+
+/* Word Card */
+.word-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.word-title {
+    color: #673ab7;
+    margin-bottom: 15px;
+}
+
+.word-section {
+    margin-bottom: 12px;
+}
+
+.word-section .label {
+    font-weight: bold;
+    color: #e91e63;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.word-section ul {
+    padding-left: 20px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #673ab7;
+    font-weight: bold;
+}
+
+.no-result {
+    text-align: center;
+    color: gray;
+}
+
+/* updation */
+
+.card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  color: #6b21a8;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.card p {
+  margin: 6px 0;
+}
+
+.card ul {
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+

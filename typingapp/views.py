@@ -103,24 +103,134 @@ def save_result(request):
     return JsonResponse({'status':'ok','id': tr.id})
 
 
+import requests
+from django.shortcuts import render
 from .models import DictionaryWord
 from django.core.paginator import Paginator
 
+import requests
+from .models import DictionaryWord
+
+# def dictionary_view(request):
+#     query = request.GET.get('q', '').strip()
+#     words = DictionaryWord.objects.all()
+#     api_word = None
+
+#     if query:
+#         # 🔹 DB check
+#         db_word = DictionaryWord.objects.filter(word__iexact=query).first()
+
+#         if db_word:
+#             words = [db_word]
+#         else:
+#             # 🔹 API call
+#             url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{query}"
+#             res = requests.get(url)
+
+#             if res.status_code == 200:
+#                 data = res.json()[0]
+
+#                 meanings = data.get('meanings', [])
+
+#                 synonyms =set()
+#                 antonyms = set()
+#                 examples = []
+
+#                 for meaning in meanings:
+#                     for d in meaning.get('definitions', []):
+#                         synonyms.update(d.get('synonyms', []))
+#                         antonyms.update(d.get('antonyms', []))
+#                         if d.get('example'):
+#                             examples.append(d['example'])
+
+#                 api_word = {
+#                     'word': query,
+#                     'meaning': meanings[0]['definitions'][0]['definition'] if meanings else 'N/A',
+#                     'synonyms': ', '.join(synonyms) if synonyms else 'N/A',
+#                     'antonyms': ', '.join(antonyms) if antonyms else 'N/A',
+#                     'examples': examples[:3]
+#                 }
+
+#                 # 🔹 OPTIONAL: DB me save karna
+#                 DictionaryWord.objects.create(
+#                     word=query,
+#                     meaning=api_word['meaning'],
+#                     synonyms=api_word['synonyms'],
+#                     antonyms=api_word['antonyms'],
+#                     sentence1=examples[0] if len(examples) > 0 else '',
+#                     sentence2=examples[1] if len(examples) > 1 else '',
+#                     sentence3=examples[2] if len(examples) > 2 else ''
+#                 )
+
+#                 words = DictionaryWord.objects.all()
+
+#     return render(request, 'typingapp/dictionary.html', {
+#         'page_obj': words,
+#         'query': query,
+#         'api_word': api_word
+#     })
+import requests
+
+def fetch_word_from_api(word):
+    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        return None
+
+    data = response.json()[0]
+
+    meaning = ""
+    synonyms = []
+    antonyms = []
+    examples = []
+
+    for meaning_block in data.get("meanings", []):
+        for d in meaning_block.get("definitions", []):
+            if not meaning:
+                meaning = d.get("definition", "")
+
+            if d.get("example"):
+                examples.append(d["example"])
+
+            synonyms.extend(d.get("synonyms", []))
+            antonyms.extend(d.get("antonyms", []))
+
+    return {
+        "word": word,
+        "meaning": meaning or "N/A",
+        "synonyms": ", ".join(set(synonyms)) or "N/A",
+        "antonyms": ", ".join(set(antonyms)) or "N/A",
+        "examples": examples[:3]  # max 3
+    }
+
+from .models import DictionaryWord
+
 def dictionary_view(request):
-    query = request.GET.get('q', '')
-    words = DictionaryWord.objects.all()
+    query = request.GET.get("q", "").strip()
+    db_words = DictionaryWord.objects.all()
+
+    api_word = None
 
     if query:
-        words = words.filter(word__icontains=query)
+        db_words = db_words.filter(word__icontains=query)
 
-    paginator = Paginator(words, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+        # agar DB mein nahi mila
+        if not db_words.exists():
+            api_word = fetch_word_from_api(query)
 
-    return render(request, 'typingapp/dictionary.html', {
-        'page_obj': page_obj,
-        'query': query
+    return render(request, "typingapp/dictionary.html", {
+        "page_obj": db_words,
+        "query": query,
+        "api_word": api_word
     })
+
+
+
+
+
+
+
 
 
 @login_required
