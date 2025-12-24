@@ -202,50 +202,6 @@ def vocabulary_test(request):
     })
 
 
-# @login_required
-# def vocabulary_test(request):
-#     questions = list(VocabularyQuestion.objects.order_by('?')[:20])
-#     request.session['vocab_qids'] = [q.id for q in questions]
-#     return render(request, 'typingapp/vocab_test.html', {'questions': questions})
-
-
-# @login_required
-# def vocab_submit(request):
-#     if request.method != 'POST':
-#         return redirect('vocabulary_test')
-
-#     qids = request.session.get('vocab_qids', [])
-#     questions = VocabularyQuestion.objects.filter(id__in=qids)
-
-#     correct = 0
-#     wrong = 0
-#     result = VocabularyTestResult.objects.create(
-#         user=request.user,
-#         score=0,
-#         total_questions=len(questions),
-#         correct=0,
-#         wrong=0
-#     )
-
-#     for q in questions:
-#         selected = request.POST.get(str(q.id))
-#         if selected == q.correct_option:
-#             correct += 1
-#         else:
-#             wrong += 1
-
-#         VocabularyAnswer.objects.create(
-#             result=result,
-#             question=q,
-#             selected_option=selected
-#         )
-
-#     result.correct = correct
-#     result.wrong = wrong
-#     result.score = correct
-#     result.save()
-
-#     return redirect('vocab_result', result.id)
 @login_required
 def vocab_submit(request):
     if request.method != 'POST':
@@ -325,7 +281,7 @@ def leaderboard(request):
 
 
 def about(request):
-    return render(request,"about.html")
+    return render(request,"typingapp/about.html")
 
 def contact(request):
-    return render(request,"contact.html")
+    return render(request,"typingapp/contact.html")
