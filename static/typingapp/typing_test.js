@@ -192,45 +192,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const typed = typingArea.value;
     const spans = sourceBox.querySelectorAll('span');
 
-    correctChars = 0;
+    // 🔹 last typed character
+    const lastChar = typed[typed.length - 1];
 
-    spans.forEach((span, i) => {
-      const ch = typed[i];
+    // 🔹 current span
+    const span = spans[globalIndex];
 
-      if (ch === undefined) {
-        // 🔥 BACKSPACE CASE → clean state
-        span.classList.remove('correct', 'wrong');
-      }
-      else if (ch === span.textContent) {
-        span.classList.add('correct');
-        span.classList.remove('wrong');
-        correctChars++;
-      }
-      else {
-        span.classList.add('wrong');
-        span.classList.remove('correct');
-      }
+    if (!span) return;
+
+    if (lastChar === span.textContent) {
+      span.classList.add('correct');
+      correctChars++;
+    } else {
+      span.classList.add('wrong');
+      errors++;
+    }
+
+    globalIndex++;
+    totalTyped++;
+
+    // 🔥 ENTER pressed → clear typing area
+    if (lastChar === '\n') {
+      typingArea.value = '';
+    }
+
+    // 🔹 auto scroll source text
+    span.scrollIntoView({
+      behavior: 'auto',
+      block: 'center'
     });
 
-    totalTyped = typed.length;
-    errors = totalTyped - correctChars;
-
+    // 🔹 WPM & accuracy
     const elapsedMin = (Date.now() - startTime) / 60000;
     const wpm = (correctChars / 5) / Math.max(elapsedMin, 0.01);
     const accuracy = totalTyped ? (correctChars / totalTyped) * 100 : 0;
 
     wpmSpan.textContent = `WPM: ${Math.round(wpm)}`;
     accSpan.textContent = `Accuracy: ${Math.round(accuracy)}%`;
-
-    // 🔥 cursor follow fix
-    const currentSpan = spans[typed.length];
-    if (currentSpan) {
-      currentSpan.scrollIntoView({
-        behavior: 'auto',
-        block: 'center'
-      });
-    }
   });
+
+   
 
 
 
