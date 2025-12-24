@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let finalText = '';
 
   for (let i = 0; i < 100; i++) {
-    finalText += arr[Math.floor(Math.random() * arr.length)] + '\n\n';
+    finalText += arr[Math.floor(Math.random() * arr.length)] + '\n';
   }
 
   return finalText.trim();
