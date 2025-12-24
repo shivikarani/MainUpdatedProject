@@ -230,6 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
         block: 'center'
       });
     }
+    // typingArea.scrollTop = typingArea.scrollHeight;
+    typingArea.scrollTo({ top: typingArea.scrollHeight, behavior: 'smooth' });
+
   });
 
 
