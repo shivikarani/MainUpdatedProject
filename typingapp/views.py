@@ -117,10 +117,12 @@ def dictionary_view(request):
         # 🔹 check in DB
         try:
             api_word = DictionaryWord.objects.get(word__iexact=query)
+
         except DictionaryWord.DoesNotExist:
-            # 🔹 Meaning & example
             meaning = ''
             example = ''
+
+            # 🔹 Meaning & example (dictionaryapi)
             try:
                 res = requests.get(
                     f"https://api.dictionaryapi.dev/api/v2/entries/en/{query}"
@@ -131,31 +133,37 @@ def dictionary_view(request):
             except:
                 pass
 
-            # 🔹 Synonym
+            # 🔹 Synonyms (datamuse)
             syn_res = requests.get(
                 f"https://api.datamuse.com/words?rel_syn={query}"
             ).json()
             synonyms = ', '.join([w['word'] for w in syn_res[:5]])
 
-            # 🔹 Antonym
+            # 🔹 Antonyms (datamuse)
             ant_res = requests.get(
                 f"https://api.datamuse.com/words?rel_ant={query}"
             ).json()
             antonyms = ', '.join([w['word'] for w in ant_res[:5]])
 
-            api_word = {
-                'word': query,
-                'meaning': meaning,
-                'synonyms': synonyms,
-                'antonyms': antonyms,
-                'sentence1': example
-            }
+            # 🔹 SAVE TO DATABASE ✅
+            db_word = DictionaryWord.objects.create(
+                word=query,
+                meaning=meaning or "N/A",
+                synonyms=synonyms or "N/A",
+                antonyms=antonyms or "N/A",
+                sentence1=example or "",
+                sentence2="",
+                sentence3=""
+            )
+
+            api_word = db_word   # now behaves like DB object
 
     return render(request, 'typingapp/dictionary.html', {
         'page_obj': db_words,
         'query': query,
         'api_word': api_word
     })
+
 
 
 
