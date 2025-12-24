@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let startTime = null;
   let sourceText = '';
   let testFinished = false;   // 🔥 IMPORTANT
+  let globalIndex = 0;   // sourceText ka overall index
+
 
   function formatTime(sec) {
     const m = Math.floor(sec / 60).toString().padStart(2, '0');
@@ -88,21 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function pickText() {
-  const arr = texts[level];
-  let finalText = '';
+    const arr = texts[level];
+    let finalText = '';
 
-  for (let i = 0; i < 100; i++) {
-    finalText += arr[Math.floor(Math.random() * arr.length)] + '\n';
+    for (let i = 0; i < 100; i++) {
+      finalText += arr[Math.floor(Math.random() * arr.length)] + '\n';
+    }
+
+    return finalText.trim();
   }
 
-  return finalText.trim();
-}
-
-   // 🔥 RESET OLD STATS
+   
   
 
   function startActualTest() {
     if (timer) clearInterval(timer);
+    globalIndex = 0;   // 🔥 reset on every new test
+    typingArea.value = '';
+
     wpmSpan.textContent = 'WPM: 0';
     accSpan.textContent = 'Accuracy: 0%';
     timerSpan.textContent = formatTime(duration);
@@ -184,35 +189,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Typing logic
   typingArea.addEventListener('input', () => {
-    typingArea.style.height = 'auto';
-    typingArea.style.height = typingArea.scrollHeight + 'px';
     const typed = typingArea.value;
     const spans = sourceBox.querySelectorAll('span');
+
     correctChars = 0;
 
     spans.forEach((span, i) => {
       const ch = typed[i];
-      if (ch == null) {
+
+      if (ch === undefined) {
+        // 🔥 BACKSPACE CASE → clean state
         span.classList.remove('correct', 'wrong');
-      } else if (ch === span.textContent) {
+      }
+      else if (ch === span.textContent) {
         span.classList.add('correct');
         span.classList.remove('wrong');
         correctChars++;
-      } else {
+      }
+      else {
         span.classList.add('wrong');
         span.classList.remove('correct');
       }
     });
-
-    const currentIndex = typingArea.value.length;
-    const currentSpan = sourceBox.querySelectorAll('span')[currentIndex];
-
-    if (currentSpan) {
-      currentSpan.scrollIntoView({
-        behavior: 'auto',
-        block: 'center'
-      });
-    }
 
     totalTyped = typed.length;
     errors = totalTyped - correctChars;
@@ -223,16 +221,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     wpmSpan.textContent = `WPM: ${Math.round(wpm)}`;
     accSpan.textContent = `Accuracy: ${Math.round(accuracy)}%`;
-    const index = typingArea.value.length;
 
-    if (spans[index]) {
-      spans[index].scrollIntoView({
-        behavior: 'smooth',
+    // 🔥 cursor follow fix
+    const currentSpan = spans[typed.length];
+    if (currentSpan) {
+      currentSpan.scrollIntoView({
+        behavior: 'auto',
         block: 'center'
       });
     }
-
   });
+
+
+
+
 
   // ✅ PROBLEM 1 FIX: force submit anytime
   submitBtn.addEventListener('click', () => {
