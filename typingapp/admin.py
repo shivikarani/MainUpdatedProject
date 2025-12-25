@@ -2,6 +2,12 @@
 from django.contrib import admin
 from .models import TestResult, DictionaryWord
 
+
+# admin.site.site_header = "Typing Speed Test Website Admin"
+# admin.site.site_title = "Typing Speed Test Website"
+# admin.site.index_title = "Typing Speed Test Website - Logged in as admin (admin)"
+
+
 @admin.register(TestResult)
 class TestResultAdmin(admin.ModelAdmin):
     list_display = ('user','created_at','wpm','accuracy','duration_seconds','level')
