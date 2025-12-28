@@ -254,8 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
     clearInterval(timer);
     typingArea.disabled = true;
 
-    const minutes = duration / 60;
-    const wpm = (correctChars / 5) / minutes;
+    const elapsedSeconds = (Date.now() - startTime) / 1000;
+    const elapsedMinutes = Math.max(elapsedSeconds / 60, 0.01);
+
+    const wpm = (correctChars / 5) / elapsedMinutes;
     const accuracy = totalTyped ? (correctChars / totalTyped) * 100 : 0;
 
     resultDiv.style.display = 'block';
