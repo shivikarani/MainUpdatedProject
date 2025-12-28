@@ -1,12 +1,14 @@
 body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background: #f9fafb;
+  /* background: #f9fafb; */
+  background:#f5f1ed;
   color: #333;
+
 }
 
 .navbar {
-  background-color:rgb(131, 6, 131);
+  background-color:#DAD2BC;
   /* #0078ff */
   padding: 10px 20px;
   display: flex;
@@ -31,7 +33,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 60px 10%;
-  background: #eef5ff;
+  
+  background: #A99985;
+  
 }
 
 .hero-text {
@@ -44,13 +48,14 @@ body {
 }
 
 .btn-primary, .btn-secondary {
-  background: rgb(250, 194, 250);
+  background: #252323;
   color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
+ 
 }
 
 .btn-secondary {
@@ -167,6 +172,7 @@ body {
 
 
 button {
+  
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
@@ -191,7 +197,7 @@ button {
   text-align: center;
   font-size: 28px;
   margin-bottom: 25px;
-  color: #d63384;
+  color: #A99985;
 }
 
 .results-table {
@@ -204,7 +210,7 @@ button {
 }
 
 .results-table thead {
-  background: linear-gradient(135deg, #ff77e9, #ffb3f0);
+  background: #70798C;
 }
 
 .results-table th {
@@ -232,7 +238,7 @@ button {
 
 /* static/css/style.css */
 footer {
-    background-color: #222;
+    background-color: #DAD2BC;
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -270,7 +276,7 @@ main {
 
 /* Footer styling */
 footer {
-    background-color: #b8488f;
+    background-color: #DAD2BC;
     color: #333333;
     padding: 20px 0;
     text-align: center;
@@ -300,16 +306,19 @@ footer nav {
 /* Leaderboard container */
 h1 {
     font-size: 2.5rem;
-    color: #ff6f91; /* vibrant pink */
+    color: #252323; /* vibrant pink */
     text-align: center;
     margin-bottom: 1.5rem;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 }
+.lead{
+  text-align: center;
+}
 
 /* Each leaderboard entry */
-p {
+.new{
     font-size: 1.2rem;
-    background: linear-gradient(135deg, #f9f9f9, #ffe6f0);
+    background:#DAD2BC;
     border-radius: 12px;
     padding: 12px 20px;
     margin: 10px auto;
@@ -379,7 +388,7 @@ nav{
 /* Active link effect */
 .navbar a.active {
   background-color: white;
-  color: #d16cf0; /* Jo bhi aapka navbar color hai */
+  color: #252323; /* Jo bhi aapka navbar color hai */
   font-weight: bold;
   border-radius: 5px;
   padding: 5px 10px;
@@ -394,7 +403,7 @@ nav{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ffd6f0, #ffe6fa);
+  background: #F5F1ED;
 }
 
 .auth-card {
@@ -408,7 +417,7 @@ nav{
 
 .auth-card h2 {
   text-align: center;
-  color: #ff4fa3;
+  color: #252323;
   margin-bottom: 25px;
 }
 
@@ -433,7 +442,7 @@ nav{
 
 .form-group input:focus {
   outline: none;
-  border-color: #ff4fa3;
+  border-color: #252323;
   box-shadow: 0 0 0 2px rgba(255,79,163,0.2);
 }
 
@@ -445,7 +454,7 @@ nav{
 
 .btn-auth {
   width: 100%;
-  background: #ff4fa3;
+  background: #252323;
   color: white;
   border: none;
   padding: 12px;
@@ -466,7 +475,7 @@ nav{
 }
 
 .auth-footer a {
-  color: #ff4fa3;
+  color: #70798C;
   font-weight: 600;
   text-decoration: none;
 }
@@ -577,10 +586,19 @@ nav{
   margin-bottom: 20px;
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  
+}
+.carda {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
 .card h3 {
-  color: #6b21a8;
+  color: #70798C;
   font-size: 22px;
   margin-bottom: 12px;
 }
@@ -621,6 +639,21 @@ nav{
   border: none;
   background: #7570d7;
   color: white;
+}
+
+/* about page */
+.about-page {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.contact--wrapper_block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.67;
+    padding-bottom: 30px;
 }
 
 

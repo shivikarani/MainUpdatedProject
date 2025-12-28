@@ -6,14 +6,14 @@
 <section class="hero">
   <div class="hero-text">
     <h1>Test Your Typing Speed</h1>
-    <p>Take a free typing test and earn your typing certificate. Practice and improve your typing skills daily.</p>
-    <a style="background-color:violet" href="{% url 'typing_test' %}" class="btn-primary">Start Typing Test</a>
+    <p class="new">Take a free typing test. Practice and improve your typing skills daily.</p>
+    <a href="{% url 'typing_test' %}" class="btn-primary">Start Typing Test</a>
   </div>
   <div class="hero-img" >
     <img width="320" height="400" src="{% static 'typingapp/banner.avif' %}" alt="Typing banner">
   </div>
 </section>
-<h1>Welcome to Typing Speed Website</h1>
+<h1>Welcome to Typing Speed Test Website</h1>
 
 <div class="carousel-container">
   {% for word in carousel_words %}
@@ -31,22 +31,22 @@
 <section class="features">
   <h2 style="text-align:center"><strong>Choose Your Challenge</strong></h2>
   <div class="feature-grid">
-    <div class="card">
+    <div class="carda">
       <h3>Timed Tests</h3>
       <p>1, 3, 5 or 10-minute tests to measure your typing speed and accuracy.</p>
     </div>
-    <div class="card">
+    <div class="carda">
       <h3>Difficulty Levels</h3>
       <p>Start with easy mode and progress to hard to truly test your typing abilities.</p>
     </div>
-    <div class="card">
+    <div class="carda">
       <h3>Track Your Progress</h3>
       <p>Log in to view your previous results, monitor WPM improvements, and earn badges.</p>
     </div>
   </div>
 </section>
 
-<section class="cta">
+<section class="cta" align="center">
   {% if not user.is_authenticated %}
     <p><a href="{% url 'signup' %}" class="btn-secondary">Create Account</a> or <a href="{% url 'login' %}">Log In</a> to save your progress.</p>
   {% else %}

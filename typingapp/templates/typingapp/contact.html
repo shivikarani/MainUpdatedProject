@@ -3,6 +3,47 @@
 {% block content %}
 <div style="max-width: 800px; margin: 50px auto; text-align: center;">
     <h1>Contact Us</h1>
-    <p>Agar aapko kisi help ki zarurat hai ya feedback dena hai, to aap hume email kar sakte hain: <strong>support@typingspeedtest.com</strong></p>
-</div>
+    <h2> Get in Touch </h2>
+    <p class="about-page"> We would love to hear from you!<br> If you have any questions, suggestions, or feedback regarding the Typing Speed Test Website, feel free to contact us.</p>
+    <h2>Email<h2>
+    <p align="center" class="about-page"><strong> <u>support@typingspeedtest.com</u></strong></p>
+    </div>
+    <form align="center" style="width:80%" class="contact--wrapper_block" type="POST">
+        <p class="head">Feedback and Queries</p><br>
+        <div><label class="gfg_feedback_label" for="feedback_select">Select Reason<span style="color:red">*</span></label><br><select class="select_feedback gfg_feedback_input" id="feedback_select" name="feedback_select" required="" fdprocessedid="fbwm6f">
+            <option value="" selected="" disabled="" hidden="">Select an Option</option>
+            <option value="Feedback and Query">Feedback</option>
+            <option value="Course Query">Course Related Queries</option>
+            <option value="Course Payment Query">Course Payment Related Issues</option>
+            <option value="Purchase Course Issues">Any Issue in Purchased Course</option>
+            <option value="Review Query">Review Related Queries</option>
+            <option value="Campus Event Sponsorship Query">Campus Event Sponsorship Related Queries</option>
+            <option value="Content Improvement Query">Content Improvement Related Queries</option>
+            <option value="Content Internship/Payment Query">Content Internship/Payment Related Queries</option>
+            <option value="DMCA Copyright">DMCA Notice/Copyright Issue/Trademark Issue</option>
+            <option value="DPO">DPO Related Queries</option>
+            <option value="Hiring Query">Hiring Related Queries</option>
+            <option value="Advertise with us">Advertise with us</option>
+            <option value="Brand and Content Integration">Brand and Content Integration</option>
+            <option value="Content List Suggestions">Content List Suggestions</option>
+            <option value="Premium Plans Related Queries">Premium Plans Related Queries</option>
+            <option value="Institute/Company Page">Institute/Company Page Related Queries</option>
+            <option value="Collaborate with us">Collaborate with us if you have a Strong Social Media Presence</option>
+            <option value="Other">Other</option>
+        </select></div>
+        <div><label class="gfg_feedback_label" for="email">Email Address<span style="color:red">*</span></label><input class="email_feedback gfg_feedback_input" name="email" type="email" fdprocessedid="q3ldya"></div>
+        <div><label class="gfg_feedback_label" for="feedback_number">Contact Number</label><br>
+
+
+        <input class="mobile_feedback gfg_feedback_input" name="feedback_number" type="tel" placeholder="Contact Number with Country Code (e.g., +91 or 9198...). " maxlength="20" fdprocessedid="fq2f7i">
+        </div>
+            
+            
+            
+                      
+        <div><label class="gfg_feedback_label" for="feedback_area">Drop your feedback/query<span style="color:red">*</span></label><br><textarea class="textarea_feedback gfg_feedback_input" name="feedback_area" rows="4" cols="50" maxlength="300" placeholder="Max Allowed Characters: 300"></textarea></div><button class="button_feedback gfg_feedback_button" type="button" onclick="sendEmail()" fdprocessedid="ryaqef">Submit</button>
+        <div class="feedback_response" style="font-size: 14pt;color: #273239;"></div>
+    </form>
+
+
 {% endblock %}

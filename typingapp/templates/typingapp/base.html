@@ -31,10 +31,10 @@
 </script>
 
 </head>
-<body style="color:violet">
+<body style="background:#f5f1ed" >
   <nav class="navbar" >
     <div class="container">
-      <a class="logo" href="{% url 'home' %}"><img src="{% static 'typingapp/logo.png' %}" alt="logo" height="50"></a>
+      <a class="logo" href="{% url 'home' %}"><img src="{% static 'typingapp/logo2.png' %}" alt="logo" height="50"></a>
       <ul class="navlinks">
         <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
         <li><a href="{% url 'dictionary' %}" class="{% if request.path == '/dictionary/' %}active{% endif %}">Dictionary</a></li>
